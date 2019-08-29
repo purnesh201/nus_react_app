@@ -4,6 +4,8 @@ import '../App.css';
 import {Navbar, Container, Row, Col} from 'react-bootstrap';
 
 import {connect} from 'react-redux';
+import { NavLink } from 'react-router-dom';
+
 
 import * as actions from '../store/actions/actions';
 
@@ -54,7 +56,7 @@ class Issues extends Component {
           		return (
           			<Row  className="issuesRow" key={index}>
           				<Col md={1}> <i className="fa fa-user-happy"></i> </Col> 
-          				<Col md={11}> {issue.title} </Col> 
+          				<Col md={11}> <NavLink to={"/issue/" + issue.number}> {issue.title}</NavLink> </Col> 
           			</Row>
           			)
           })}

@@ -1,9 +1,11 @@
 const initialState = {}
 
 const issueObj = (state = initialState, action) => {
-  if (action.type === "UPDATE_A") {
+  if (action.type === "ISSUE_DETAILS") {
+  	console.log("received ISSUE_DETAILS");
     return {
       ...state,
+      ...action.payload
     };
   }
 
