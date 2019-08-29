@@ -8,7 +8,7 @@ import Issue from './components/issue';
 import CreateIssue from './components/create_issue';
 
 import {BrowserRouter as Router, Route} from 'react-router-dom';
-// import Route from 'react-router-dom/Route';
+//   import Route from 'react-router-dom/Route';
 
 
 function App() {
