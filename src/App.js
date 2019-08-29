@@ -5,8 +5,10 @@ import Issues from './components/issues';
 
 import Issue from './components/issue';
 
-import {BrowserRouter as Router} from 'react-router-dom';
-import Route from 'react-router-dom/Route';
+import CreateIssue from './components/create_issue';
+
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+// import Route from 'react-router-dom/Route';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
         <Route path="/issues/" exact component={Issues}>
         </Route>
         <Route path="/issue/:id" exact component={Issue}>
+        </Route>
+        <Route path="/create_issue" exact component={CreateIssue}>
         </Route>
         </div>
     </Router>

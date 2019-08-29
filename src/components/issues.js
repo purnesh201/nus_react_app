@@ -1,45 +1,45 @@
 import React, {Component} from 'react';
 
 import '../App.css';
-import {Nav, Navbar, NavDropdown, Container, Row, Col, Table, ListGroup, Tabs, Tab} from 'react-bootstrap';
+import {Navbar, Container, Row, Col} from 'react-bootstrap';
+
+import {connect} from 'react-redux';
+
+import * as actions from '../store/actions/actions';
 
 
 class Issues extends Component {
 
-	constructor(){
-		super();
-		this.state = {
-			issues : [
-				{
-					id: 1,
-					title: "Hot reload is not working with CSS modules, starting in 3.1.0",
-					created_date : "08-05-19 22:12:10",
-					status : "open"
-				},
-				{
-					id: 2,
-					title: "There might be a problem with the project dependency tree. Can't deploy to Heroku.",
-					created_date : "08-05-19 22:12:10",
-					status : "open"
-				},
-				{
-					id: 3,
-					title: "Jest fails when importing a 3rd party non TS module",
-					created_date : "08-05-19 22:12:10",
-					status : "open"
-				},
-				{
-					id: 4,
-					title: "node_modules Mocks are not picked up by jest with latest react-scripts ",
-					created_date : "08-05-19 22:12:10",
-					status : "open"
-				},
+	getIssuesList = () => {
+		fetch ("https://api.github.com/repos/purnesh201/nus_react_app/issues")
+		.then(response => response.json())
+		.then(response => {
+			console.log(response);
+			return response;
+		});
 
-			]
-		}
 	}
 
+	// async componentDidMount (){
+	// 	try {
+	// 		const newIssues = await fetch ("https://api.github.com/repos/purnesh201/nus_react_app/issues");
+	// 		if (!newIssues){
+	// 			console.log("Error throwing");
+	// 			throw Error("Error in getting issues");
+	// 		}
+	// 		const json = await newIssues.json();
+	// 		console.log("received the new json");
+	// 		this.setState({
+	// 			issues: json
+	// 		});
+	// 	} catch (error){
+	// 		console.log(error);
+	// 	}
+	// }
 
+	componentDidMount() {
+		this.props.getIssues();
+	}
 
 	render() {
 		return (
@@ -49,25 +49,33 @@ class Issues extends Component {
       	<Navbar.Brand href="">Sample Project Issues</Navbar.Brand>
       	</Navbar>
 
-      <Container className="containerClass border">
-          
-        
-
-          {this.state.issues.map((issue, index) => {
+      <Container className="containerClass border">        
+          {this.props.issuesList.map((issue, index) => {
           		return (
-          			<Row  className="issuesRow" key="{index}">
-          				<Col md={1}> <i class="fa fa-user-happy"></i> </Col> 
+          			<Row  className="issuesRow" key={index}>
+          				<Col md={1}> <i className="fa fa-user-happy"></i> </Col> 
           				<Col md={11}> {issue.title} </Col> 
           			</Row>
           			)
           })}
-
       </Container>
-
     </div>
 		);
 	}
 
 }
 
-export default Issues;
+const mapStoreToProps = (store) => {
+	return {	
+		issuesList: store.issuesList
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		getIssues: () => dispatch(actions.getAllIssues())
+	}
+}
+
+
+export default connect(mapStoreToProps, mapDispatchToProps)(Issues);
